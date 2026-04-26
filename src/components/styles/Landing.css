@@ -1,0 +1,486 @@
+.landing-section {
+  width: 100%;
+  max-width: var(--cMaxWidth);
+  margin: auto;
+  position: relative;
+  height: var(--vh);
+}
+
+.landing-container {
+  width: var(--cWidth);
+  margin: auto;
+  height: 100%;
+  position: relative;
+  max-width: var(--cMaxWidth);
+}
+
+/* Hero mesh background */
+.landing-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(14, 165, 233, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(56, 189, 248, 0.06) 0%,
+      transparent 50%
+    );
+  animation: meshMove 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes meshMove {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.landing-circle1 {
+  top: 0%;
+  left: 0%;
+  z-index: 15;
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background-color: rgba(14, 165, 233, 0.25);
+  box-shadow: inset -50px 40px 50px rgba(14, 165, 233, 0.3);
+  filter: blur(60px);
+  border-radius: 50%;
+  animation: loadingCircle 5s linear infinite;
+}
+
+.nav-fade {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 130px;
+  background-image: linear-gradient(
+    0deg,
+    transparent,
+    var(--color-bg-primary) 70%
+  );
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+  left: 0;
+}
+
+@keyframes loadingCircle {
+  0% {
+    transform: translate(-95%, -75%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-95%, -75%) rotateZ(360deg);
+  }
+}
+
+.landing-circle2 {
+  top: 50%;
+  right: 0%;
+  transform: translate(calc(100% - 2px), -50%);
+  z-index: 9;
+  position: fixed;
+  display: none;
+  width: 300px;
+  height: 300px;
+  background-color: rgba(56, 189, 248, 0.2);
+  box-shadow: inset -50px 40px 50px rgba(14, 165, 233, 0.25);
+  filter: blur(50px);
+  border-radius: 50%;
+  animation: loadingCircle2 5s linear infinite;
+}
+
+@keyframes loadingCircle2 {
+  100% {
+    transform: translate(calc(100% - 2px), -50%) rotate(360deg);
+  }
+}
+
+.landing-video,
+.landing-image {
+  position: absolute;
+  bottom: 0;
+  height: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.landing-image img {
+  height: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+.character-rim {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 1;
+  background-color: rgba(14, 165, 233, 0.25);
+  box-shadow: inset 0 0 80px 20px rgba(14, 165, 233, 0.4);
+  filter: blur(60px);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%) scale(1.4);
+  opacity: 0;
+}
+
+@keyframes backlight {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 100%) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 40%) scale(1.6);
+  }
+}
+
+.character-model {
+  height: 80%;
+  height: 80vh;
+  position: absolute;
+  max-width: 1920px;
+  max-height: 1080px;
+  transform: translateX(-50%);
+  width: 100%;
+  left: 50%;
+  z-index: 0;
+  bottom: 50px;
+  pointer-events: none;
+}
+
+.character-model::after {
+  content: "";
+  width: 100vw;
+  height: 250px;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-bg-primary) 70%
+  );
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
+}
+
+.character-model::before {
+  content: "";
+  width: 100vw;
+  height: 700px;
+  background-color: var(--color-bg-primary);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
+}
+
+.character-loaded .character-rim {
+  animation: backlight 3s forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.character-model canvas {
+  position: relative;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.character-hover {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ── Left block: "Hello! I'm" + Name ─────────────────────────────── */
+.landing-intro {
+  position: absolute;
+  z-index: 9;
+  top: 12%;
+  left: 0;
+}
+
+.landing-greeting {
+  margin: 0;
+  color: var(--color-accent-primary);
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+}
+
+.landing-intro h1 {
+  margin: 0;
+  margin-top: 6px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+  font-family: "Space Grotesk", sans-serif;
+  color: #f0f4f8;
+  letter-spacing: 1px;
+}
+
+/* ── Right block: "A Creative" + Role switcher ───────────────────── */
+.landing-info {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 48px;
+  top: inherit;
+  z-index: 9;
+}
+
+.landing-role-label {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: var(--color-text-secondary);
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+}
+
+/* The animated role text — sized to fit any role string on one line */
+.landing-role-switcher {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  color: var(--color-accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: normal; /* allow wrap on desktop if long */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Fade transitions for role switching */
+.role-fade-out {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.role-fade-in {
+  animation: roleFadeIn 0.4s ease forwards;
+}
+
+@keyframes roleFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@media screen and (min-width: 500px) {
+  .landing-circle2 {
+    display: block;
+  }
+  .character-model {
+    z-index: 0;
+  }
+  .landing-role-label {
+    font-size: 16px;
+  }
+  .landing-greeting {
+    font-size: 18px;
+  }
+  .landing-intro h1 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .landing-role-switcher {
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .character-model {
+    height: 80vh;
+  }
+  .landing-greeting {
+    font-size: 22px;
+  }
+  .landing-intro h1 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+  .landing-role-label {
+    font-size: 18px;
+  }
+  .landing-role-switcher {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .character-model {
+    height: 100vh;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    pointer-events: none;
+  }
+  .character-model::after,
+  .character-model::before {
+    display: none;
+  }
+  .landing-intro {
+    top: 50%;
+    left: auto;
+    right: 66%;
+    transform: translate(0%, -50%);
+    z-index: 20;
+  }
+  .landing-info {
+    bottom: auto;
+    top: 51%;
+    z-index: 20;
+    text-align: left;
+    transform: translate(0%, -50%);
+    right: auto;
+    left: 66%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .landing-intro {
+    top: 50%;
+    left: auto;
+    right: 70%;
+    transform: translate(0%, -50%);
+    z-index: 20;
+  }
+  .landing-info {
+    bottom: auto;
+    top: 51%;
+    z-index: 20;
+    text-align: left;
+    transform: translate(0%, -50%);
+    right: auto;
+    left: 70%;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .landing-greeting {
+    font-size: 28px;
+  }
+  .landing-intro h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+  }
+  .landing-role-label {
+    font-size: 22px;
+  }
+  .landing-role-switcher {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+  }
+}
+
+/* ─── Mobile hero: matches reference design ────────────────────────────────
+   Character fills the full screen as a background.
+   "Hello! I'm + Name" sits at top-left, z-index 9, on top of character.
+   Role info sits at bottom-left, z-index 9.
+   CTA buttons are hidden on mobile.
+   ─────────────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 768px) {
+  /* Section and container stay position:relative, height:100vh */
+  .landing-section {
+    display: block;
+  }
+
+  .landing-container {
+    position: relative;
+    height: 100%;
+  }
+
+  /* Character fills the screen behind everything */
+  .character-model {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    bottom: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Name block — top left, over the character */
+  .landing-intro {
+    position: absolute;
+    top: 18%;
+    left: 20px;
+    right: auto;
+    transform: none;
+    z-index: 9;
+    text-align: left;
+  }
+
+  .landing-greeting {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .landing-intro h1 {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: 1px;
+    color: #f0f4f8;
+  }
+
+  /* Role info — bottom left, over the character */
+  .landing-info {
+    position: absolute;
+    bottom: 36px;
+    left: 20px;
+    right: auto;
+    top: auto;
+    transform: none;
+    z-index: 9;
+    text-align: left;
+  }
+
+  .landing-role-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin: 0 0 6px 0;
+  }
+
+  .landing-role-switcher {
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
+    white-space: normal;      /* allow wrap if needed on very narrow screens */
+    max-width: calc(100vw - 40px);
+  }
+}
+
+/* Hide cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-main {
+    display: none !important;
+  }
+}
+
+/* Hide social sidebar on mobile */
+@media screen and (max-width: 900px) {
+  .icons-section {
+    display: none;
+  }
+}

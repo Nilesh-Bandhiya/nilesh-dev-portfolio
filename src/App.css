@@ -1,0 +1,46 @@
+.section-container {
+  width: 1300px;
+}
+
+/* Section isolation — prevents content bleeding between sections */
+.about-section,
+.whatIDO,
+.career-section,
+.work-section,
+.contact-section {
+  position: relative;
+  z-index: auto;
+}
+
+.career-section,
+.work-section,
+.contact-section {
+  border-top: 1px solid #1E3A5F;
+}
+
+.title,
+.para {
+  font-kerning: none;
+  -webkit-text-rendering: optimizeSpeed;
+  text-rendering: optimizeSpeed;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+@media only screen and (max-width: 1600px) {
+  .section-container {
+    width: 1200px;
+    max-width: calc(100% - 160px);
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .section-container {
+    width: 900px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .section-container {
+    width: 500px;
+    max-width: var(--cWidth);
+  }
+}
