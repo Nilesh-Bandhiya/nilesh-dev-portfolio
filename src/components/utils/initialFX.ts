@@ -1,5 +1,6 @@
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { smoother } from "../Navbar";
 
 export function initialFX() {
@@ -70,6 +71,12 @@ export function initialFX() {
       duration: 1.2,
       ease: "power1.inOut",
       delay: 0.1,
+      onComplete: () => {
+        gsap.ticker.add(() => {
+          gsap.registerPlugin(ScrollTrigger);
+          ScrollTrigger.refresh();
+        }, true, true);
+      }
     }
   );
 }

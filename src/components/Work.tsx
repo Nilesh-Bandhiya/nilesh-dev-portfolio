@@ -69,13 +69,14 @@ const Work = () => {
       gsap.fromTo(
         ".work-card",
         {
-          y: 60,
+          y: window.innerWidth < 768 ? 0 : 60,
           opacity: 0,
         },
         {
           scrollTrigger: {
-            trigger: ".work-grid",
-            start: "top 85%",
+            trigger: component.current,
+            start: window.innerWidth < 768 ? "top 98%" : "top 85%",
+            once: true,
           },
           y: 0,
           opacity: 1,
