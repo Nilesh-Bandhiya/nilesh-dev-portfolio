@@ -61,32 +61,61 @@ const projects = [
 ];
 
 const Work = () => {
-  const component = useRef(null);
+  const component = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    let ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".work-card",
-        {
-          y: window.innerWidth < 768 ? 0 : 60,
-          opacity: 0,
-        },
-        {
-          scrollTrigger: {
-            trigger: component.current,
-            start: window.innerWidth < 768 ? "top 98%" : "top 85%",
-            once: true,
-          },
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-        }
-      );
+    const isMobile = window.innerWidth < 768;
+    let observer: IntersectionObserver | null = null;
+
+    const ctx = gsap.context(() => {
+      if (!isMobile) {
+        gsap.fromTo(
+          ".work-card",
+          { y: 60, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: component.current,
+              start: "top 85%",
+              once: true,
+              invalidateOnRefresh: true,
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out",
+          }
+        );
+      }
     }, component);
-    return () => ctx.revert();
+
+    if (isMobile && component.current) {
+      // IntersectionObserver is reliable on all actual mobile devices — avoids
+      // ScrollSmoother virtual-scroll position mismatches that cause opacity:0 lock
+      gsap.set(".work-card", { opacity: 0 });
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            gsap.to(".work-card", {
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: "power3.out",
+            });
+            observer?.disconnect();
+            observer = null;
+          }
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(component.current);
+    }
+
+    return () => {
+      observer?.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (

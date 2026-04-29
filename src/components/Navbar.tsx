@@ -38,10 +38,6 @@ const Navbar = () => {
       });
     });
 
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
-
     const header = document.querySelector(".header") as HTMLElement | null;
     const handleScroll = () => {
       if (!header) return;
@@ -51,7 +47,16 @@ const Navbar = () => {
         header.classList.remove("header-scrolled");
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    // passive:true lets the browser scroll without waiting for JS — eliminates scroll jank
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    const resizeHandler = () => { ScrollSmoother.refresh(true); };
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", resizeHandler);
+    };
   }, []);
 
   const navLinks = [
